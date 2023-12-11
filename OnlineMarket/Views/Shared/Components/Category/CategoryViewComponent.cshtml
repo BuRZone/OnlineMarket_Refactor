@@ -1,0 +1,37 @@
+﻿@using OnlineMarket.BLL.ViewModels.Category;
+@model List<CategoryVM>
+
+
+   
+    <div class="btn1" id="secondbtn1">
+         <span class="fas fa-bars"></span>
+         </div>
+
+         <nav1 class="sidebar">
+         <ul style="width:100%">
+            
+             @foreach(var item in Model)
+             {
+                 <form method="get" asp-controller="SubCategory" asp-action="GetSubCategory" asp-route-id="@item.Id">
+                   <button class="btn btn-outline-primary" id="Catbtn_@item.Id" style="width:90%;border:unset;"><font color="black">@item.CategoryName</font></button>
+                 </form>
+             }       
+             
+         </ul>
+      </nav1>
+
+
+      @foreach(var item in Model)
+      {
+      <nav1 class="sidebar2" id="s_@item.Id">
+          <ul style="width:100%">
+         @await Component.InvokeAsync("SubCategory", @item.Id)
+         </ul>
+      </nav1>
+      }
+
+      <nav1 class="sidebar3">
+          <ul>
+              hello
+         </ul>
+      </nav1>

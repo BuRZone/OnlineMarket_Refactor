@@ -1,0 +1,233 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body::-webkit-scrollbar {
+    width: 10px; /* ширина scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+    background: white; /* цвет дорожки */
+    border: none;
+    background-color: #DC307D;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: lightgray; /* цвет плашки */
+    border-radius: 20px; /* закругления плашки */
+    border: none; /* padding вокруг плашки */
+}
+
+
+
+
+
+nav1 ul::-webkit-scrollbar {
+    width: 5px; /* ширина scrollbar */
+}
+
+nav1 ul::-webkit-scrollbar-track {
+    background: white; /* цвет дорожки */
+}
+
+nav1 ul::-webkit-scrollbar-thumb {
+    background-color:lightgray; /* цвет плашки */
+    border-radius: 20px; /* закругления плашки */
+    border: none; /* padding вокруг плашки */
+}
+
+.btn1 {
+    position: absolute;
+    top: 15px;
+    left: -300px;
+    height: 45px;
+    width: 45px;
+    text-align: center;
+    background:none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: left 4.4s ease;
+    opacity: 0;
+}
+
+    .btn1.click {
+        left: 300px;
+        z-index: 5;
+        
+        opacity: 1;
+        transition-property: opacity;
+        transition-duration: 0.4s;
+    }
+
+    .btn1 span  {
+
+        color: white;
+        font-size: 28px;
+        line-height: 45px;
+    }
+
+    .btn1.click span:before {
+        content: '\f00d';
+
+    }
+
+.sidebar {
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    left: -300px;
+    background: #1b1b1b;
+    transition: left 0.2s ease;
+    z-index: 10;
+}
+    .sidebar.show {
+        left: 0px;
+        opacity:1;
+    }
+.sidebar2 {
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    top: -1000px;
+    left: 300px;
+    background: #1b1b1b;
+    /*transition: top 0.5s ease;*/
+    z-index: 10;
+    /*opacity: 0;*/
+}
+
+    .sidebar2.show {
+        left: 301px;
+        top: 0px;
+        opacity: 1;
+        /*transition-property: opacity;
+        transition-duration: 0.5s;*/
+    }
+
+.sidebar3 {
+    position: absolute;
+    width: 300px;
+    height: 100%;
+    left: -300px;
+    background: #1b1b1b;
+    transition: top 0.5s ease;
+    z-index: 9;
+    opacity: 0;
+}
+
+    .sidebar3.show {
+        left: 302px;
+        opacity: 1;
+        transition-property: opacity;
+        transition-duration: 0.5s;
+    }
+
+
+nav1 ul {
+    background: #fff;
+    height: 100%;
+    width: 100%;
+    list-style: none;
+    overflow-y: scroll;
+}
+    nav1 ul li {
+        line-height: 40px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+
+    }
+    nav1 ul li:last-child {
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+
+    }
+    nav1 ul li a {
+        position: relative;
+        color: black;
+        text-decoration: none;
+        font-size: 14px;
+        padding-left: 40px;
+        font-weight: 500;
+        display: block;
+        width: 100%;
+        border-left: 3px solid transparent;
+
+    }
+
+/*        nav1 ul li.active a {
+            color: cyan;
+            background: #1e1e1e;
+            border-left-color: cyan;
+
+        }*/
+        nav1 ul li a:hover {
+            background-color: magenta;
+
+        }
+/*    nav1 ul ul {
+        position: static;
+        display: none;
+
+    }*/
+/*    nav1 ul .feat-show.show {
+        display: block;
+
+    }
+    nav1 ul .serv-show.show1 {
+        display: block;
+
+    }*/
+/*    nav1 ul ul li {
+        line-height: 42px;
+        border-top: none;
+
+    }*/
+/*        nav1 ul ul li a {
+            font-size: 17px;
+            color: #e6e6e6;
+            padding-left: 80px;
+
+        }*/
+/*    nav1 ul li.active ul li a {
+        color: #e6e6e6;
+        background: #1b1b1b;
+        border-left-color: transparent;
+
+    }*/
+/*    nav1 ul ul li a:hover {
+        color: cyan !important;
+        background: #1e1e1e !important;
+
+    }*/
+
+.lock {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .7);
+    opacity: 0;
+    visibility: hidden;
+    transition: .01s linear;
+    transform: translateX(-100%);
+}
+
+    .overlay.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+    }

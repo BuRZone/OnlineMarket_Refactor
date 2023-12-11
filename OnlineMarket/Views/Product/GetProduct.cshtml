@@ -1,0 +1,71 @@
+﻿@using OnlineMarket.BLL.ViewModels.Product;
+@model List<ProductVM>
+
+    <p>Product List</p>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+
+
+
+
+                    @*<form method="get" action="/Basket/AddToCart/@item.Id">
+                        
+                        <input type="submit"/></form>*@
+
+
+                    <a href="/Basket/AddToCart/@item.Id" name="n_@item.Id" id="@item.Id">addtocart</a>
+
+@*                    @Html.ActionLink("Add to Cart", "AddToCart", "Basket", new {id=item.Id})*@
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+<script>
+
+$('[name^="n_"]').click( function (e) {
+
+        e.preventDefault();
+
+        var ID = $(this).attr("id");
+
+
+        $.ajax({
+  method: "POST",
+  url: "/Basket/AddToCart",
+  data: {id:ID}
+})
+  .done(function( msg ) {
+    alert( "Data Saved: " + msg );
+  });
+
+    });
+</script>

@@ -1,0 +1,56 @@
+﻿@using OnlineMarket.BLL.ViewModels.Category;
+@model List<CategoryVM>
+
+
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-6">
+            <h2 class="text-primary">
+                Category List
+            </h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create New Category
+            </a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-hover" style="text-align: center" >
+  <thead>
+      <colgroup>
+        <col span="1" style="width: 15%;">
+        <col span="1" style="width: 15%;">
+        <col span="1" style="width: 15%;">
+        <col span="1" style="width: 15%;">
+        <col span="1" style="width: auto;">
+      </colgroup>
+    <tr>
+      <th scope="col">Category</th>
+      <th scope="col">Id</th>
+      <th scope="col">Quantity of SubCategories</th>
+      <th scope="col">Quantity of Products</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+      @foreach(var item in Model)
+      {
+            <tr class="table-secondary" style="text-align: center;">
+                <th scope="row">@item.CategoryName</th>
+                <td>@item.Id</td>
+                <td></td>
+                <td></td>
+                <td>
+                    <button asp-route-id="@item.Id" asp-action="/Category/Delete" class="btn btn-primary" style="width:100px"><i class="bi bi-trash"></i></button>
+                    <button asp-route-id="@item.Id" asp-action="/Category/Edit" class="btn btn-success" style="width:100px"><i class="bi bi-pencil-square"></i></button>
+                    
+                </td>
+            </tr>
+      }
+  </tbody>
+</table>
+
+

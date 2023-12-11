@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - OnlineMarket</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style1.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+@*    <link rel="stylesheet" href="~/OnlineMarket.styles.css" asp-append-version="true" />*@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+</head>
+
+      @await Component.InvokeAsync("Category")
+
+<body>
+ 
+    <header>                   
+        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+            <div class="container-fluid">
+                <div> 
+                    <button class="btn btn-primary" id="mybtn">
+                        <span class="navbar-toggler-icon" style="height:35px;width:35px"></span>
+                      </button>
+                        <div class="overlay"></div>
+                </div>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index"><font style="font-size:40px">OnlineMarket</font></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Category" asp-action="GetCategory">Category</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Product" asp-action="GetProduct">Product</a>
+                            </li>
+                        }
+                    </ul>
+                
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="row">
+                            <div class="col-md">
+                                <form method="post" asp-controller="Account" asp-action="Logout" class="nav-link">
+                                    <button type="submit" style="background-color:unset;border:none;">
+                                    <i class="bi bi-person" style="font-size: 2.5em;padding-left:0.05em"></i>
+                                    <p style="margin-top:-1em;">Выйти</p>
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-md"><a asp-controller="Basket" asp-action="Get" class="nav-link">
+                                <i class="bi bi-cart4" style="font-size: 2.5em;"></i>
+                                <p style="margin-top:-0.9em; margin-left:-0.35em">Корзина</p></a>
+                            
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-md"><a asp-controller="Account" asp-action="Login" class="nav-link"> 
+                                <i class="bi bi-person" style="font-size: 2.5em; margin-right:0.30em"></i>
+                                <p style="margin-top:-1em;">Войти</p></a>
+                            </div>
+
+                            <div class="col-md">
+                                <i class="bi bi-cart4" style="font-size: 2.5em;"></i>
+                                <p style="margin-top:-0.9em; margin-left:-0.35em">Корзина</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+             </div>
+        </nav>
+
+        <nav class="navbar navbar-expand-lg bg-primary" style="height: 100px;padding-bottom:50px" data-bs-theme="light">
+            <form method="get" asp-controller="Product" asp-action="SearchProduct"  class="d-flex m-lg-1" style="width:100%">
+                <input name="searchString" class="form-control me-sm-2" type="text" placeholder="Search">
+                <button class="btn btn-secondary my-2 my-sm-0" id="search1" type="submit">Search</button>
+            </form>
+        </nav>
+        <nav class="navbar navbar-expand-lg bg-primary"
+             style="border-radius: 25px 25px 0 0; background:linear-gradient(90deg,#34b6e2, #5f62b0,#db307d);margin-top: -28px;"
+                    data-bs-theme="dark">
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+        
+            
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+           @* &copy; 2023 - OnlineMarket - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/style1.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>    
+
+       <script>
+    $(function () {
+ 
+    var page = 0;
+    var _inCallback = false;
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageIndex = urlParams.get('pageNumber');
+    var targetUrl = '';
+    var currentUrl = new URL(window.location);
+    if(currentUrl.pathname == '/')
+    {
+        currentUrl = '/Home/Index?';
+    }
+    function loadItems() {
+        if (page > -1 && !_inCallback) {
+            _inCallback = true;
+            page++;
+
+
+            $.ajax({
+                type: 'GET',
+                url: currentUrl + `&scrolled=${page}&pageNumber=${pageIndex}`,
+                success: function (data, textstatus) {
+                    if (data != '') {
+                        $("#scrolList").append(data);
+                    }
+                    else {
+                        page = -1;
+                    }
+                    _inCallback = false;
+                }
+            });
+        }
+    }
+    $(window).scroll(function () {
+        const scrolled = window.scrollY
+        const threshold = $(document).height() - $(window).height()/4
+        const position = scrolled + $(window).height()
+
+        if (position >= threshold) {
+ 
+            loadItems();
+        }
+    });
+});
+</script>
